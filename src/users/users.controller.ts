@@ -1,5 +1,5 @@
 // prettier-ignore
-import {Controller,Post,Body,Get,Param,Patch,Delete,Query,Session} from '@nestjs/common';
+import {Controller,Post,Body,Get,Param,Patch,Delete,Query,Session,UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dtos/update-user.dto';
@@ -8,9 +8,10 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 import { AuthService } from './auth.service';
 import { User } from './user.entity';
 import { CurrentUser } from './decorators/current-user.decorator';
+import { AuthGuard } from '../guards/auth.guard';
 
-@Serialize(UserDto)
 @Controller('auth')
+@Serialize(UserDto)
 export class UsersController {
   constructor(
     private usersService: UsersService,
@@ -33,7 +34,8 @@ export class UsersController {
   // }
 
   @Get('/whoami')
-  whoAmI(@CurrentUser() user: string) {
+  @UseGuards(AuthGuard)
+  whoAmI(@CurrentUser() user: User) {
     return user;
   }
 
