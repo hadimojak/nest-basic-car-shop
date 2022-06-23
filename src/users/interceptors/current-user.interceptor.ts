@@ -1,6 +1,5 @@
 // prettier-ignore
 import {  NestInterceptor,  ExecutionContext,  CallHandler,  Injectable} from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { UsersService } from '../users.service';
 
 @Injectable()

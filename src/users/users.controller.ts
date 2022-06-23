@@ -40,6 +40,7 @@ export class UsersController {
   }
 
   @Post('/signout')
+  @UseGuards(AuthGuard)
   signout(@Session() session: any) {
     session.userId = null;
     return 'user signed out';
@@ -62,22 +63,26 @@ export class UsersController {
 
   //   @UseInterceptors(new SerializeInterceptor(UserDto))
   @Get('/:id')
+  @UseGuards(AuthGuard)
   findUser(@Param('id') id: string) {
     const user = this.usersService.findOne(parseInt(id));
     return user;
   }
 
   @Get()
+  @UseGuards(AuthGuard)
   findAllUsers(@Query('email') email: string) {
     return this.usersService.find(email);
   }
 
   @Patch('/:id')
+  @UseGuards(AuthGuard)
   updateUser(@Body() body: UpdateUserDto, @Param('id') id: string) {
     return this.usersService.update(parseInt(id), body);
   }
 
   @Delete('/:id')
+  @UseGuards(AuthGuard)
   removeUser(@Param('id') id: string) {
     return this.usersService.remove(parseInt(id));
   }

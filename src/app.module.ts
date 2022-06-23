@@ -24,6 +24,7 @@ const cookieSession = require('cookie-session');
           database: config.get<string>('DB_NAME'),
           synchronize: true,
           entities: [User, Report],
+          // dropSchema: true,
         };
       },
     }),
